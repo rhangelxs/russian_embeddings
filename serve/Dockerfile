@@ -8,6 +8,6 @@ EXPOSE 8080
 ENV FLASK_APP wsgi.py
 ENV FLASK_CONFIG Dev
 ENV FLASK_DEBUG 1
-ADD . /opt
+ADD . /opt/serve
 
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]
