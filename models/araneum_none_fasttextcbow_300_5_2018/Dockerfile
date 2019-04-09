@@ -13,23 +13,21 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+ADD ./requirements.txt /opt/requirements.txt
+
+WORKDIR /opt
 #RUN mkdir /model
 RUN curl -O http://rusvectores.org/static/models/rusvectores4/fasttext/araneum_none_fasttextcbow_300_5_2018.tgz \
     && tar -xvzf araneum_none_fasttextcbow_300_5_2018.tgz -C . \
     && rm araneum_none_fasttextcbow_300_5_2018.tgz \
     && ls .
 
-ADD ./requirements.txt /opt/requirements.txt
-WORKDIR /opt
-
-RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 8080
-
 ADD . /opt/models/araneum_none_fasttextcbow_300_5_2018
 RUN touch /opt/models/__init__.py
 RUN touch /opt/__init__.py
 
-WORKDIR /opt
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 8080
 
 ENV FLASK_APP serve/wsgi.py
 ENV FLASK_CONFIG Dev
