@@ -9,18 +9,19 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN curl -O http://rusvectores.org/static/models/rusvectores4/fasttext/araneum_none_fasttextcbow_300_5_2018.tgz \
-    && tar -xvzf araneum_none_fasttextcbow_300_5_2018.tgz -C . \
-    && rm araneum_none_fasttextcbow_300_5_2018.tgz \
-    && ls .
-
-
 ADD ./requirements.txt /opt/requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /opt/requirements.txt
 
 ADD . /opt/models/araneum_none_fasttextcbow_300_5_2018
 RUN touch /opt/models/__init__.py
 RUN touch /opt/__init__.py
+
+WORKDIR /opt/models/araneum_none_fasttextcbow_300_5_2018
+
+RUN curl -O http://rusvectores.org/static/models/rusvectores4/fasttext/araneum_none_fasttextcbow_300_5_2018.tgz \
+    && tar -xvzf araneum_none_fasttextcbow_300_5_2018.tgz -C . \
+    && rm araneum_none_fasttextcbow_300_5_2018.tgz \
+    && ls .
 
 COPY --from=serve /opt/serve /opt/serve
 WORKDIR /opt/serve
