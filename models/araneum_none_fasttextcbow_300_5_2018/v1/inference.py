@@ -1,5 +1,8 @@
 from arrested import Resource, Endpoint, json
 
+from gensim.similarities import WmdSimilarity
+import numpy as np
+
 from .utils import EmbeddingWrapper
 
 inference_endpoint_resource = \
@@ -34,5 +37,24 @@ class EndpointOne(Endpoint):
         return json.dumps(vector.tolist())
 
 
+class EndpointWmdSimilarity(Endpoint):
+
+    name = 'wmdsimilarity'
+    many = False
+    url = '/wmdsimilarity'
+
+    def post(self, *args, **kwargs):
+        request = self.get_request_handler()
+        num_best = request.process().data.get("num_best") or 5
+        corpus = request.process().data.get("corpus")
+        query = request.process().data.get("query")
+
+        wmd = WmdSimilarity(corpus, embedding.fasttext_model, num_best=num_best)
+        # TODO: wmd result index has np.int64s and they are converted to float (need manual convert to int)
+        result = np.asarray(wmd[query]).tolist()
+        return json.dumps(result)
+
+
 inference_endpoint_resource.add_endpoint(EndpointOne)
 inference_endpoint_resource.add_endpoint(EndpointMany)
+inference_endpoint_resource.add_endpoint(EndpointWmdSimilarity)
