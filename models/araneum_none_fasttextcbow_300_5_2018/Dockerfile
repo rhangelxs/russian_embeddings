@@ -24,13 +24,14 @@ RUN curl -O http://rusvectores.org/static/models/rusvectores4/fasttext/araneum_n
     && ls .
 
 COPY --from=serve /opt/serve /opt/serve
-WORKDIR /opt/serve
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /opt/serve/requirements.txt
 
 ENV FLASK_APP serve/wsgi.py
 ENV FLASK_CONFIG Dev
 ENV FLASK_DEBUG 1
 
 EXPOSE 8080
+
+WORKDIR /opt
 
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]
