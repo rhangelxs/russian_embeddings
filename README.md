@@ -30,7 +30,7 @@ Individual words can be sended with GET or POST requests. Below `{word}` is a pl
   Payload is:
   ```{"token": "{word}"}```
   
-  Example od POST payload:
+  Example of POST payload:
   ```{"token": "тест"}```
   
 You can send multiple words to `POST endpoint` and in a responce you will get a mean vector of standard size.
