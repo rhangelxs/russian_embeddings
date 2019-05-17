@@ -1,6 +1,6 @@
 # API server for word embeddings for Russian language
 
-Docker images for Russian various word2vec models. Now, there is only one model ([Araneum](https://rusvectores.org/en/models/)) which is FastText model created with [Gensim](github.com/RaRe-Technologies/gensim) package. The model got from RusVectores
+Docker images for Russian various word2vec models. Now, there is only one model ([Araneum](https://rusvectores.org/en/models/)) which is FastText model created with [Gensim](https://github.com/RaRe-Technologies/gensim) package. The model got from RusVectores
 
 Builded images are stored at DockerHub here: [https://hub.docker.com/r/rhangelxs/russian_embeddings](hub.docker.com/r/rhangelxs/russian_embeddings). Individual models marked with a tag. Anareum model DockerHub's tag is: `rhangelxs/russian_embeddings:araneum_none_fasttextcbow_300_5_2018`
 
