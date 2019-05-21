@@ -45,9 +45,10 @@ class EndpointWmdSimilarity(Endpoint):
 
     def post(self, *args, **kwargs):
         request = self.get_request_handler()
-        num_best = request.process().data.get("num_best") or 5
-        corpus = request.process().data.get("corpus")
-        query = request.process().data.get("query")
+        data = request.process().data
+        num_best = data.get("num_best") or 5
+        corpus = data.get("corpus")
+        query = data.get("query")
 
         wmd = WmdSimilarity(corpus, embedding.fasttext_model, num_best=num_best)
         # TODO: wmd result index has np.int64s and they are converted to float (need manual convert to int)
