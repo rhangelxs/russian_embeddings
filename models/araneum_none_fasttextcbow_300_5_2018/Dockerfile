@@ -18,7 +18,8 @@ RUN touch /opt/__init__.py
 
 WORKDIR /opt/models/araneum_none_fasttextcbow_300_5_2018
 
-RUN tar -xvzf araneum_none_fasttextcbow_300_5_2018.tgz -C . \
+RUN curl -O https://github.com/rhangelxs/russian_embeddings/raw/eb07ab62d9de03f0e450d35b94fe568818b7ae8c/models/araneum_none_fasttextcbow_300_5_2018/araneum_none_fasttextcbow_300_5_2018.tgz \
+    && tar -xvzf araneum_none_fasttextcbow_300_5_2018.tgz -C . \
     && rm araneum_none_fasttextcbow_300_5_2018.tgz \
     && ls .
 
