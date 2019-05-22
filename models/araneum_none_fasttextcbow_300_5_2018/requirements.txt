@@ -1,4 +1,4 @@
 numpy
 
-gensim==3.7.2
+gensim==3.7.1
 pyemd
