@@ -18,7 +18,7 @@ RUN touch /opt/__init__.py
 
 WORKDIR /opt/models/araneum_none_fasttextcbow_300_5_2018
 
-RUN curl -O http://rusvectores.org/static/models/rusvectores4/fasttext/araneum_none_fasttextcbow_300_5_2018.tgz \
+RUN curl -OL http://rusvectores.org/static/models/rusvectores4/fasttext/araneum_none_fasttextcbow_300_5_2018.tgz \
     && tar -xvzf araneum_none_fasttextcbow_300_5_2018.tgz -C . \
     && rm araneum_none_fasttextcbow_300_5_2018.tgz \
     && ls .
