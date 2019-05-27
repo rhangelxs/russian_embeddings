@@ -1,8 +1,10 @@
 from arrested import Resource, Endpoint, json
 
-from gensim.similarities import WmdSimilarity
 import numpy as np
+from gensim.similarities import WmdSimilarity
+from functools import lru_cache
 
+from .hashable_cache import hashable_cache
 from .utils import EmbeddingWrapper
 
 inference_endpoint_resource = \
@@ -37,6 +39,11 @@ class EndpointOne(Endpoint):
         return json.dumps(vector.tolist())
 
 
+@hashable_cache(lru_cache(maxsize=256))
+def return_wmd(corpus, num_best):
+    return WmdSimilarity(corpus, embedding.fasttext_model, num_best=num_best)
+
+
 class EndpointWmdSimilarity(Endpoint):
 
     name = 'wmdsimilarity'
@@ -45,15 +52,16 @@ class EndpointWmdSimilarity(Endpoint):
 
     def post(self, *args, **kwargs):
         request = self.get_request_handler()
-        num_best = request.process().data.get("num_best") or 5
-        corpus = request.process().data.get("corpus")
-        query = request.process().data.get("query")
+        data = request.process().data
+        num_best = data.get("num_best") or 5
+        corpus = data.get("corpus")
+        query = data.get("query")
 
-        wmd = WmdSimilarity(corpus, embedding.fasttext_model, num_best=num_best)
+        wmd = return_wmd(corpus, num_best)
+
         # TODO: wmd result index has np.int64s and they are converted to float (need manual convert to int)
         result = np.asarray(wmd[query]).tolist()
         return json.dumps(result)
-
 
 inference_endpoint_resource.add_endpoint(EndpointOne)
 inference_endpoint_resource.add_endpoint(EndpointMany)

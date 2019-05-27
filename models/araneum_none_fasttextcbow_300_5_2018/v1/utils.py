@@ -2,6 +2,9 @@ import os
 
 import gensim
 import numpy
+from gensim.similarities import WmdSimilarity
+
+from .hashable_cache import hashable_cache
 
 model_dir = os.path.dirname(os.path.dirname(__file__))
 
