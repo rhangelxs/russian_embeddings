@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 ADD ./requirements.txt /opt/requirements.txt
 RUN pip install --no-cache-dir -r /opt/requirements.txt
 
+ADD . /opt/models/universal_sentence_encoder_multilingual_qa
 RUN touch /opt/models/__init__.py
 RUN touch /opt/__init__.py
 
