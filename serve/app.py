@@ -21,7 +21,7 @@ def create_app():
 
     try:
         sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(__file__)), "models"))
-        import models
+        from .. import models
     except ModuleNotFoundError:
         print("No models found outside of 'serve' folder")
         raise
