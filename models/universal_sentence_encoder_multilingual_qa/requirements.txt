@@ -1,6 +1,6 @@
 numpy # remove if it will not used be used in endpoints
 
-tensorflow==1.13.1
+tensorflow==1.15.0
 sentencepiece
 tf-sentencepiece==0.1.83
 tensorflow_hub
